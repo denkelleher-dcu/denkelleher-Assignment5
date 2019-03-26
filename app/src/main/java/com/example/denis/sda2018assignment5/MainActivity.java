@@ -18,6 +18,10 @@
 package com.example.denis.sda2018assignment5;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -90,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements
             return;
         }
 
-        showProgressDialog();
+        //showProgressDialog();
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -102,19 +106,18 @@ public class MainActivity extends AppCompatActivity implements
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            Toast.makeText(MainActivity.this, R.string.auth_success,
+                                    Toast.LENGTH_LONG).show();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                            Toast.makeText(MainActivity.this, R.string.auth_fail,
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 
                         // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
-                        }
-                        hideProgressDialog();
+                        //hideProgressDialog();
                         // [END_EXCLUDE]
                     }
                 });
@@ -181,18 +184,12 @@ public class MainActivity extends AppCompatActivity implements
     //OnClick implementation
     @Override
     public void onClick(View v) {
-        // Todo nothing for now
-        /*int i = v.getId();
-        if (i == R.id.emailCreateAccountButton) {
-            createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.emailSignInButton) {
-            signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.signOutButton) {
-            signOut();
-        } else if (i == R.id.verifyEmailButton) {
-            sendEmailVerification();
-        }*/
+        signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+
     }
+
+
+
 
 
 
